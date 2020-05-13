@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Excel-Reader/utility"
 	"Excel-Reader/validation"
 	"fmt"
 )
@@ -24,11 +25,17 @@ func main() {
 					"2": "age",
 				},
 
-				"rules": "!isNull(A) && !isNull(B)",
+				"rules": "!IsNull(A) && IsNull(B) && B>10 && IsNull(12)",
 			},
 		},
 	}
 
-	fmt.Println("Check validation : ", validation.ValidateFileConfig(config))
+	result, err := utility.SeperateExpressions("!IsNull(A) && IsNull(B) && B>10 && IsNull(12)")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(result)
+
+	fmt.Println("Check validation : ", validation.ValidateConfig(config))
 
 }

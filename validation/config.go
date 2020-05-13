@@ -4,7 +4,6 @@ package validation
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -24,13 +23,13 @@ type Config struct {
 	Sheets []*Sheets `json:"sheets" validate:"required,dive"`
 }
 
-func ValidateFileConfig(config map[string]interface{}) bool {
+//ValidateConfig consumes map[string]interface and returns true for valid config else returns false
+func ValidateConfig(config map[string]interface{}) bool {
 	var configuration Config
+
 	data, _ := json.Marshal(config)
 	json.Unmarshal(data, &configuration)
-	for _, v := range configuration.Sheets {
-		fmt.Println(v)
-	}
+
 	v := validator.New()
 	err := v.Struct(configuration)
 
